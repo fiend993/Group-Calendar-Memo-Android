@@ -9,9 +9,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.coms5540.calendarmemo.Utilities.Event;
 import com.coms5540.calendarmemo.Utilities.HttpClientSingleton;
+import com.coms5540.calendarmemo.Utilities.SharedMessageViewModel;
 import com.coms5540.calendarmemo.Utilities.Variable;
 
 import org.json.JSONException;
@@ -37,6 +39,8 @@ import okhttp3.Response;
 public class UpdateActivity extends AppCompatActivity {
     private Event event;
     private String token;
+
+    private SharedMessageViewModel sm;
     TextView editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,8 @@ public class UpdateActivity extends AppCompatActivity {
         });
         editor = findViewById(R.id.updateDesciption);
         editor.setText(event.getDescription());
+
+        sm = new ViewModelProvider(this).get(SharedMessageViewModel.class);
     }
 
     //This trigger when user click the delete button
@@ -85,6 +91,7 @@ public class UpdateActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "delete success " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
+                    sm.setMessage("refresh");
                     finish();
                 }else{
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "delete Failed " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
@@ -128,6 +135,7 @@ public class UpdateActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "update success " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
+                    sm.setMessage("refresh");
                     finish();
                 }else{
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "update Failed " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
