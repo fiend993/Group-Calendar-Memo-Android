@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/menuFloatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-300dp"
+        android:layout_marginBottom="-650dp"
+        android:clickable="true"
+        android:contentDescription="@string/menu"
+        android:onClick="showMenu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_dialer"
+        app:backgroundTint="@color/design_default_color_secondary"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/calendarFragmentContainer"
+            android:name="com.coms5540.calendarmemo.Fragment.CalendarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_calendar" />
+
+        <!-- Container for Fragment B -->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/selectDayFragmentContainer"
+            android:name="com.coms5540.calendarmemo.Fragment.SelectDayFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_selectday" />
+    </LinearLayout>
+
+
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:onClick="hideMenu"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <LinearLayout
+        android:id="@+id/floatingMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/menuFloatingButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/openGroupPage"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:onClick="joinGroup"
+            android:text="@string/manage_group" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:onClick="logout"
+            android:text="@string/logout" />
+
+        <Button
+            android:id="@+id/newMemo"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:onClick="createNewMemo"
+            android:text="@string/create_memo" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

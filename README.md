@@ -1,1 +1,0 @@
-# GroupCalendarMemo-Frontend
