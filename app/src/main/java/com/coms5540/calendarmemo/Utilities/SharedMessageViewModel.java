@@ -9,7 +9,7 @@ public class SharedMessageViewModel extends ViewModel {
     private final MutableLiveData<String> message = new MutableLiveData<>();
 
     public void setMessage(String msg) {
-        message.setValue(msg);
+        message.postValue(msg);
     }
 
     public LiveData<String> getMessage() {

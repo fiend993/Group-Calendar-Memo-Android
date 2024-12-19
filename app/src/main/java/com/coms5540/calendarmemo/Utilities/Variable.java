@@ -13,4 +13,5 @@ public class Variable {
     public final static String joinGroup = "/api/auth/join-group";
     public final static String requireLock = "/api/events/request-lock";
     public final static String releaseLock = "/api/events/release-lock";
+    public final static String delete = "/api/events/";
 }

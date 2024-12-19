@@ -1,5 +1,6 @@
 package com.coms5540.calendarmemo.Container;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;

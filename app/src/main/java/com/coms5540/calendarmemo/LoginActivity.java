@@ -108,8 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("token", jsonObject.getString("token"));
                         editor.putStringSet("user_groups", new HashSet<>(groupsList));
                         editor.putBoolean("isLoggedIn",true);
-                        //TODO talk about this
-                        //editor.putString("name",jsonObject.getString(""))
+                        editor.putString("name",jsonObject.getString("username"));
                         editor.apply();
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show());
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

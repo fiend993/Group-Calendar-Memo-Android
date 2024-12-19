@@ -77,7 +77,7 @@ public class UpdateActivity extends AppCompatActivity {
     //This trigger when user click the delete button
     public void delete(View v){
         OkHttpClient client = HttpClientSingleton.getInstance();
-        Request request = new Request.Builder().url(Variable.host + Variable.releaseLock)
+        Request request = new Request.Builder().url(Variable.host + Variable.delete + event.getId())
                 .addHeader("Authorization", "Bearer " + token)
                 .delete()
                 .build();

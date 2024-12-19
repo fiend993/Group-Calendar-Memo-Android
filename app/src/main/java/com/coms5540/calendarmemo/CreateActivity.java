@@ -33,6 +33,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -67,7 +69,7 @@ public class CreateActivity extends AppCompatActivity {
     //The description of the new post
     TextView description;
     //user id
-    String id;
+    String userName;
     //The calendar for use to select day
     CalendarView select;
     //Point to the month that calendar current display
@@ -87,7 +89,7 @@ public class CreateActivity extends AppCompatActivity {
         //and the userId
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs",MODE_PRIVATE);
         Set<String> groupSet = sharedPreferences.getStringSet("user_groups", new HashSet<>());
-        id = sharedPreferences.getString("userId", "nulllllll");
+        userName = sharedPreferences.getString("name", "null");
         Spinner dropdownMenu = findViewById(R.id.groupDrownDown);
 
         //set up the dropdown menu for user choice the group
@@ -206,13 +208,14 @@ public class CreateActivity extends AppCompatActivity {
             return;
         }
 
-        String date = selectedDay.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+        LocalDateTime selectedDayTime = selectedDay.atTime(LocalTime.now());
+        String date = selectedDayTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
         JSONObject body = new JSONObject();
         body.put("title",newTitle);
         body.put("description",newDescription);
         body.put("date",date);
-        body.put("createdBy",id);
+        body.put("createdBy", userName);
         body.put("group",selectedGroup);
 
         OkHttpClient client = HttpClientSingleton.getInstance();

@@ -37,6 +37,9 @@
         <activity android:name=".EventDetailActivity"
             android:label="event"
             android:exported="true"/>
+        <activity android:name=".UpdateActivity"
+            android:label="update"
+            android:exported="true"/>
     </application>
 
 </manifest>

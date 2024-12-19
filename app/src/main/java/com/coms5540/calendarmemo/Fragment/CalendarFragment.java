@@ -309,7 +309,15 @@ public class CalendarFragment extends Fragment {
                 List<Event> dayEvents = new ArrayList<>();
                 monthEvent.put(day,dayEvents);
             }
-            Objects.requireNonNull(monthEvent.get(day)).add(event);
+            boolean isDuplicate = false;
+            for(int j = 0; j < Objects.requireNonNull(monthEvent.get(day)).size(); j++){
+                if(Objects.requireNonNull(monthEvent.get(day)).get(j).getId().equals(event.getId())){
+                    isDuplicate = true;
+                }
+            }
+            if(!isDuplicate){
+                Objects.requireNonNull(monthEvent.get(day)).add(event);
+            }
         }
     }
 

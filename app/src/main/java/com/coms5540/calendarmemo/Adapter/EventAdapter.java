@@ -1,5 +1,6 @@
 package com.coms5540.calendarmemo.Adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     //to swap the old list with new list, and redraw the recycler view
+    @SuppressLint("NotifyDataSetChanged")
     public void setEventList(List<Event> newEventList) {
         this.eventList = newEventList; // Replace the old list with the new list
         notifyDataSetChanged(); // Notify the adapter that the dataset has changed
