@@ -1,5 +1,6 @@
 package com.coms5540.calendarmemo;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.coms5540.calendarmemo.Utilities.Event;
 import com.coms5540.calendarmemo.Utilities.HttpClientSingleton;
@@ -39,8 +42,6 @@ import okhttp3.Response;
 public class UpdateActivity extends AppCompatActivity {
     private Event event;
     private String token;
-
-    private SharedMessageViewModel sm;
     TextView editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +71,6 @@ public class UpdateActivity extends AppCompatActivity {
         });
         editor = findViewById(R.id.updateDesciption);
         editor.setText(event.getDescription());
-
-        sm = new ViewModelProvider(this).get(SharedMessageViewModel.class);
     }
 
     //This trigger when user click the delete button
@@ -91,7 +90,9 @@ public class UpdateActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "delete success " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
-                    sm.setMessage("refresh");
+                    Intent intent = new Intent("broadcast_refresh_message");
+                    intent.putExtra("message","refresh");
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
                     finish();
                 }else{
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "delete Failed " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
@@ -111,10 +112,10 @@ public class UpdateActivity extends AppCompatActivity {
         }
         body.put("description", newDescription);
 
-        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-        String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+        //ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
+        //String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
 
-        body.put("date",date);
+        body.put("date",event.getDate());
         body.put("createdBy",event.getCreatedBy());
         body.put("group",event.getGroup());
 
@@ -135,7 +136,9 @@ public class UpdateActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "update success " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());
-                    sm.setMessage("refresh");
+                    Intent intent = new Intent("broadcast_refresh_message");
+                    intent.putExtra("message","refresh");
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
                     finish();
                 }else{
                     runOnUiThread(() -> Toast.makeText(UpdateActivity.this, "update Failed " + response.message() + " code:" + response.code(),Toast.LENGTH_LONG).show());

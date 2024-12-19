@@ -18,6 +18,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -76,6 +80,13 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
+                    SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Set<String> group = sharedPreferences.getStringSet("user_groups",new HashSet<>());
+                    Set<String> newGroup = new HashSet<>(group);
+                    newGroup.add(groupCode);
+                    editor.putStringSet("user_groups",newGroup);
+                    editor.commit();
                     runOnUiThread(() -> Toast.makeText(GroupActivity.this, "Join success", Toast.LENGTH_SHORT).show());
                 }else{
                     runOnUiThread(() -> Toast.makeText(GroupActivity.this, "Join failed!", Toast.LENGTH_SHORT).show());

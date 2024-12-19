@@ -4,7 +4,10 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.kizitonwose.calendar.core.ExtensionsKt.daysOfWeek;
 import static com.kizitonwose.calendar.core.ExtensionsKt.firstDayOfWeekFromLocale;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +15,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +28,7 @@ import android.widget.Toast;
 
 import com.coms5540.calendarmemo.Container.DayViewContainer;
 import com.coms5540.calendarmemo.Container.MonthViewContainer;
+import com.coms5540.calendarmemo.LoginActivity;
 import com.coms5540.calendarmemo.R;
 import com.coms5540.calendarmemo.Utilities.Event;
 import com.coms5540.calendarmemo.Utilities.EventCallback;
@@ -180,14 +186,6 @@ public class CalendarFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sm = new ViewModelProvider(this).get(SharedMessageViewModel.class);
-        sm.getMessage().observe(this, msg ->{
-            if(msg != null){
-                if(msg.equals("refresh")){
-                    refresh();
-                }
-            }
-        });
     }
 
     @Override
@@ -211,7 +209,11 @@ public class CalendarFragment extends Fragment {
                 }
             }
         });
+
+        IntentFilter filter = new IntentFilter("broadcast_refresh_message");
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver,filter);
     }
+
 
     //This is call every time when we scoll to a new month
     //pull the event of that month
@@ -311,7 +313,7 @@ public class CalendarFragment extends Fragment {
             }
             boolean isDuplicate = false;
             for(int j = 0; j < Objects.requireNonNull(monthEvent.get(day)).size(); j++){
-                if(Objects.requireNonNull(monthEvent.get(day)).get(j).getId().equals(event.getId())){
+                if(Objects.requireNonNull(monthEvent.get(day)).get(j).getId().equals(event.getId()) && Objects.requireNonNull(monthEvent.get(day)).get(j).getDescription().equals(event.getDescription())){
                     isDuplicate = true;
                 }
             }
@@ -333,6 +335,7 @@ public class CalendarFragment extends Fragment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String startDate = firstDay.format(formatter);
         String endDate = lastDay.format(formatter);
+        monthEvent = new HashMap<>();
         getEvent(startDate, endDate, new EventCallback() {
             @Override
             public void onSuccess(JSONArray events) {
@@ -352,6 +355,7 @@ public class CalendarFragment extends Fragment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String startDate = firstDay.format(formatter);
         String endDate = lastDay.format(formatter);
+        monthEvent = new HashMap<>();
         getEvent(startDate, endDate, new EventCallback() {
             @Override
             public void onSuccess(JSONArray events) {
@@ -364,4 +368,14 @@ public class CalendarFragment extends Fragment {
             }
         });
     }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra("message");
+            if(message != null && message.equals("refresh")){
+                refresh();
+            }
+        }
+    };
 }
