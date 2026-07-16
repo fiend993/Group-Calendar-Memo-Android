@@ -24,22 +24,22 @@
         </activity>
         <activity android:name=".LoginActivity"
             android:label="Login"
-            android:exported="true" />
+            android:exported="false" />
         <activity android:name=".RegisterActivity"
             android:label="Register"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity android:name=".CreateActivity"
             android:label="CreateMemo"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity android:name=".GroupActivity"
             android:label="group"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity android:name=".EventDetailActivity"
             android:label="event"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity android:name=".UpdateActivity"
             android:label="update"
-            android:exported="true"/>
+            android:exported="false"/>
     </application>
 
 </manifest>
