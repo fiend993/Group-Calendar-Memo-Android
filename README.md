@@ -1,10 +1,12 @@
 # Group Calendar Memo
 
-A native Android application for managing shared calendars, group events,
-memos, and notifications.
+This application was developed as a two-person course project for
+Distributed and Networked Operating Systems. I owned the complete native
+Android client, while my teammate developed the backend service.
 
-The application was developed as a two-person course project for
-Distributed and Networked Operating Systems Course. I built and owned the complete native Android client for a two-person client-server application, implementing authentication, calendar and event workflows, group collaboration, memos, REST API integration, JWT session handling, and real-time communication.
+My work included authentication, calendar and event workflows, group
+collaboration, memos, REST API integration, JWT session handling, and
+real-time client-server communication.
 
 ## Demo
 
@@ -131,3 +133,25 @@ third-party calendar UI component.
 │  Business Logic              │
 │  Data Persistence            │
 └──────────────────────────────┘
+```
+
+## Running the Project
+
+### Requirements
+
+- Android Studio
+- Android SDK 26 or later
+- Java 11
+- Android emulator or physical device
+- A compatible backend service
+
+### Configuration
+
+The original backend was developed separately by my teammate and is not
+included in this public repository.
+
+To connect the Android client to another compatible backend, update the
+server addresses in:
+
+```text
+app/src/main/java/com/coms5540/calendarmemo/Utilities/Variable.java
