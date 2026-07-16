@@ -13,23 +13,32 @@ calendar, event-management, and memo workflows.
 
 ▶️ [Watch the 27-second application demo](assets/calendar-memo-highlights.mp4)
 
-<p align="center">
-  <img src="assets/01-calendar-home.png"
-       width="220"
-       alt="Monthly calendar interface" />
-
-  <img src="assets/02-create-event.png"
-       width="220"
-       alt="Event creation interface" />
-
-  <img src="assets/03-event-on-calendar.png"
-       width="220"
-       alt="Created event displayed on the calendar" />
-
-  <img src="assets/04-edit-memo.png"
-       width="220"
-       alt="Memo editing interface" />
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/01-calendar-home.png" width="250" alt="Calendar home screen">
+      <br>
+      <strong>Calendar Home</strong>
+    </td>
+    <td align="center">
+      <img src="assets/02-create-event.png" width="250" alt="Create event screen">
+      <br>
+      <strong>Create Event</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/03-event-on-calendar.png" width="250" alt="Event displayed on calendar">
+      <br>
+      <strong>Event Details</strong>
+    </td>
+    <td align="center">
+      <img src="assets/04-edit-memo.png" width="250" alt="Edit memo screen">
+      <br>
+      <strong>Edit Memo</strong>
+    </td>
+  </tr>
+</table>
 
 ### Demonstrated workflows
 
